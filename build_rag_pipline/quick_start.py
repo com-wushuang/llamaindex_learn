@@ -1,10 +1,11 @@
+from dotenv import load_dotenv
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 from llama_index.llms.google_genai import GoogleGenAI
 from llama_index.embeddings.google_genai import GoogleGenAIEmbedding
 from llama_index.core import Settings
-import os
 
-os.environ["GOOGLE_API_KEY"] = "AIzaSyBTr4OVOWkfUKYZvPQEAgHXG9Vxj2_6uik"
+load_dotenv()
+
 llm = GoogleGenAI(model="models/gemini-3.1-flash-lite-preview")
 embed_model = GoogleGenAIEmbedding(model_name="gemini-embedding-2-preview")
 

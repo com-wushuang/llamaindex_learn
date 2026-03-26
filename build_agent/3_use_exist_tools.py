@@ -1,7 +1,7 @@
+from dotenv import load_dotenv
 from llama_index.tools.yahoo_finance import YahooFinanceToolSpec
 from llama_index.llms.google_genai import GoogleGenAI
 from llama_index.core.agent.workflow import FunctionAgent
-
 
 
 def multiply(a: float, b: float) -> float:
@@ -12,6 +12,9 @@ def multiply(a: float, b: float) -> float:
 def add(a: float, b: float) -> float:
     """Add two numbers and returns the sum"""
     return a + b
+
+
+load_dotenv()
 
 # 使用 YahooFinanceToolSpec 来获取股票价格
 finance_tools = YahooFinanceToolSpec().to_tool_list()
@@ -27,10 +30,9 @@ workflow = FunctionAgent(
 
 
 async def main():
-    response = await workflow.run(
-        user_msg="What's the current stock price of NVIDIA?"
-    )
+    response = await workflow.run(user_msg="What's the current stock price of NVIDIA?")
     print(response)
+
 
 if __name__ == "__main__":
     import asyncio

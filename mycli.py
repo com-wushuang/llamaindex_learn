@@ -1,8 +1,6 @@
 #!/Users/chengjun/private/RAG/llamaindex_learn/.venv/bin/python
 import os
-
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
+from dotenv import load_dotenv
 import chromadb
 import nest_asyncio
 from llama_index.core.ingestion import IngestionPipeline, IngestionCache
@@ -14,12 +12,12 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core import Settings
 from llama_index.readers.file import PyMuPDFReader, DocxReader
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+load_dotenv()
 nest_asyncio.apply()
-
 
 llm = GoogleGenAI(
     model="models/gemini-3.1-flash-lite-preview",
-    api_key="AIzaSyBTr4OVOWkfUKYZvPQEAgHXG9Vxj2_6uik",
 )
 embed_model = HuggingFaceEmbedding(
     model_name="BAAI/bge-small-zh-v1.5",

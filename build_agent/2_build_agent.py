@@ -1,9 +1,7 @@
 from dotenv import load_dotenv
-
-load_dotenv()
-
 from llama_index.llms.google_genai import GoogleGenAI
 from llama_index.core.agent.workflow import FunctionAgent
+
 
 def multiply(a: float, b: float) -> float:
     """Multiply two numbers and returns the product"""
@@ -14,6 +12,8 @@ def add(a: float, b: float) -> float:
     """Add two numbers and returns the sum"""
     return a + b
 
+
+load_dotenv()
 llm = GoogleGenAI(model="models/gemini-3.1-flash-lite-preview")
 
 workflow = FunctionAgent(
@@ -21,6 +21,7 @@ workflow = FunctionAgent(
     llm=llm,
     system_prompt="You are an agent that can perform basic mathematical operations using tools.",
 )
+
 
 async def main():
     response = await workflow.run(user_msg="What is 20+(2*4)?")
