@@ -18,6 +18,7 @@ nest_asyncio.apply()
 
 llm = GoogleGenAI(
     model="models/gemini-3.1-flash-lite-preview",
+    api_key=os.getenv("GOOGLE_API_KEY"),
 )
 embed_model = HuggingFaceEmbedding(
     model_name="BAAI/bge-small-zh-v1.5",
@@ -44,16 +45,14 @@ custom_ingestion_pipeline = IngestionPipeline(
 
 # 1. 初始化解析器
 parser = LlamaParse(
-    api_key="llx-v2753fWKACxlZTM71VWsdvJuUlVb2fVnmpnzMIgwU8uK67Dq",  # 替换为你的 Key
+    api_key=os.getenv("LLAMA_CLOUD_API_KEY"),  # 替换为你的 Key
     result_type="markdown",       # 推荐 Markdown，对 AI 最友好
     language="ch_sim",           # 如果文档是中文，建议指定语言
+    use_vendor_multimodal_model=True,
 )
 
 file_extractor = {
     ".pdf": parser,
-    ".docx": parser,
-    ".pptx": parser,
-    ".xlsx": parser,
 }
 
 rag_cli_instance = RagCLI(
