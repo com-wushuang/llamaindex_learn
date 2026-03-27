@@ -2,3 +2,4 @@ chroma_db
 .env
 data
 .DS_Store
+testdata
