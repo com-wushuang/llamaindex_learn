@@ -10,14 +10,15 @@ from llama_index.cli.rag import RagCLI
 from llama_index.llms.google_genai import GoogleGenAI
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core import Settings
-from llama_parse import LlamaParse
+from llama_index.readers.file import MarkdownReader
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 load_dotenv()
 nest_asyncio.apply()
 
 llm = GoogleGenAI(
-    model="models/gemini-3.1-flash-lite-preview",
+    # model="models/gemini-3.1-flash-lite-preview",
+    model="models/gemini-2.5-flash",
     api_key=os.getenv("GOOGLE_API_KEY"),
 )
 embed_model = HuggingFaceEmbedding(
@@ -43,16 +44,8 @@ custom_ingestion_pipeline = IngestionPipeline(
     cache=IngestionCache(),
 )
 
-# 1. 初始化解析器
-parser = LlamaParse(
-    api_key=os.getenv("LLAMA_CLOUD_API_KEY"),  # 替换为你的 Key
-    result_type="markdown",       # 推荐 Markdown，对 AI 最友好
-    language="ch_sim",           # 如果文档是中文，建议指定语言
-    use_vendor_multimodal_model=True,
-)
-
 file_extractor = {
-    ".pdf": parser,
+    ".md": MarkdownReader(),
 }
 
 rag_cli_instance = RagCLI(
